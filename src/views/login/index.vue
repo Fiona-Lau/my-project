@@ -32,39 +32,39 @@
 export default {
   data: () => ({
     loginForm: {
-      username: 'admin',
-      password: '123456'
+      username: "admin",
+      password: "123456"
     },
     loginRules: {
       username: [
-        { required: true, message: '请输入登录名称', trigger: 'blur' },
-        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+        { required: true, message: "请输入登录名称", trigger: "blur" },
+        { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
       ],
       password: [
-        { required: true, message: '请输入登录密码', trigger: 'blur' },
-        { min: 6, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+        { required: true, message: "请输入登录密码", trigger: "blur" },
+        { min: 6, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" }
       ]
     }
   }),
   methods: {
-    resetForm () {
-      this.$refs.loginRef.resetFields()
-      this.loginForm.username = this.loginForm.password = '';
+    resetForm() {
+      this.$refs.loginRef.resetFields();
+      this.loginForm.username = this.loginForm.password = "";
     },
-    isLogin () {
+    isLogin() {
       this.$refs.loginRef.validate(async valid => {
-        if (!valid) return
+        if (!valid) return;
         const {
           data: { data, meta }
-        } = await this.$http.post('login', this.loginForm)
-        if (meta.status != 200) return this.$message.error('登录失败')
-        this.$message.success('登录成功')
-        window.sessionStorage.setItem('token', data.token)
-        this.$router.push('/home')
-      })
+        } = await this.$http.post("login", this.loginForm);
+        if (meta.status != 200) return this.$message.error("登录失败");
+        this.$message.success("登录成功");
+        window.sessionStorage.setItem("token", data.token);
+        this.$router.push("/home");
+      });
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .login {

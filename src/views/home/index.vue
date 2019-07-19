@@ -17,6 +17,8 @@
           unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
+          router
+          :default-active="activePath"
         >
           <el-submenu :index="menu.id + ''" v-for="menu in menus" :key="menu.id">
             <template slot="title">
@@ -24,9 +26,10 @@
               <span>{{menu.authName}}</span>
             </template>
             <el-menu-item
-              :index="subMenu.id + ''"
+              :index="'/'+subMenu.path"
               v-for="subMenu in menu.children"
               :key="subMenu.id"
+              @click="setNavState('/'+subMenu.path)"
             >
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -36,7 +39,9 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -44,7 +49,8 @@
 export default {
   data: () => ({
     menus: [],
-    isCollapse: true,
+    isCollapse: false,
+    activePath: '',
     icons: {
       '125': 'iconfont icon-user',
       '103': 'iconfont icon-tijikongjian',
@@ -54,6 +60,7 @@ export default {
     }
   }),
   created() {
+    this.activePath = sessionStorage.getItem('activePath')
     this.getMenus()
   },
   methods: {
@@ -70,6 +77,9 @@ export default {
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
+    },
+    setNavState(activePath) {
+      this.activePath = sessionStorage.setItem('activePath', activePath)
     }
   },
   computed: {

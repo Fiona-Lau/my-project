@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/login'
-import Home from './views/home'
-import './assets/base.less'
+import Login from '../views/login'
+import Home from '../views/home'
+import Welcome from '../views/home/welcome'
+import Users from '../views/home/users'
+import '../assets/base.less'
 Vue.use(Router)
 
 const router = new Router({
   routes: [{
     path: '/',
-    redirect: '/login'
+    redirect: '/home'
   },
   {
     path: '/login',
@@ -16,7 +18,15 @@ const router = new Router({
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    redirect: '/welcome',
+    children: [{
+      path: '/welcome',
+      component: Welcome
+    }, {
+      path: '/users',
+      component: Users
+    }]
   }
   ]
 })
